@@ -1,5 +1,6 @@
 
-    <script src="{{ mix('js/scripts.js') }}"></script>
-    <script src="{{ mix('js/app.js') }}"></script>
+    <script src="{{ mix('js/admin/scripts.js') }}"></script>
+    @yield('scripts')
+    <script src="{{ mix('js/admin/app.js') }}"></script>
 </body>
 </html>

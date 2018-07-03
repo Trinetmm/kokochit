@@ -36,6 +36,9 @@
                     <li>
                         <a href="{{ route('admin.products.create') }}">Create a new product</a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.tags.index') }}">Tags</a>
+                    </li>
                 </ul>
                 <!-- /.nav-second-level -->
             </li>

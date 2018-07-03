@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PageController@index');
+Route::get('/products', 'PageController@products')->name('products');
 
 Auth::routes();
 
@@ -39,4 +38,11 @@ Route::prefix('admin')->group(function(){
 
 	Route::resource('/products', 'AdminProductsController', ['as'=>'admin']);
 
+
+	//Tags
+	Route::get('/tags', 'AdminTagController@index')->name('admin.tags.index');
+	Route::post('/tags', 'AdminTagController@store')->name('admin.tags.store');
+	Route::get('/tags/{tag}/edit', 'AdminTagController@edit')->name('admin.tags.edit');
+	Route::patch('/tags/{tag}', 'AdminTagController@update')->name('admin.tags.update');
+	Route::delete('/tags/{tag}', 'AdminTagController@destroy')->name('admin.tags.destroy');
 });

@@ -11,11 +11,12 @@
     <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
 
     <!-- Styles -->
-    <link href="{{ mix('css/style.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/admin/style.css') }}" rel="stylesheet">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/admin/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    @yield('stylesheets')
+    <link href="{{ mix('css/admin/app.css') }}" rel="stylesheet">
 </head>
 <body>

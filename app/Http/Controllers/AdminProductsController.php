@@ -6,7 +6,12 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
 use App\Brand;
+use App\Tag;
+
 use Auth;
+use Image;
+
+use App\ProductPhoto;
 
 class AdminProductsController extends Controller
 {
@@ -35,7 +40,8 @@ class AdminProductsController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::all();
-        return view('admins.products.create', compact('categories', 'brands'));
+        $tags = Tag::all();
+        return view('admins.products.create', compact('categories', 'brands', 'tags'));
     }
 
     /**
@@ -54,11 +60,32 @@ class AdminProductsController extends Controller
             'old_price' => 'required|numeric',
             'availability' => 'required',
             'quantity' => 'required|numeric',
+            'photos' => 'required',
             'quick_overview' => 'required|string|min:2 max:255',
             'detail' => 'required'
         ]);
+
+       
+        if($request->hasFile('photos')):
+            $i=0;
+            foreach($request->file('photos') as $photo):
+                $i+=1;
+                $filename = time() . $i . '.' . $photo->getClientOriginalExtension();
+                $location = public_path('images/products/' . $filename);
+                Image::make($photo)->resize(800,800)->save($location);
+                $paths[]=$filename;
+            endforeach;
+        endif;
+
+       
         $request['admin_id']=Auth::user()->id;
-        Product::create($request->all());
+        $product = Product::create($request->all());
+
+        foreach($paths as $path):
+            $product->images()->save(new ProductPhoto(['path' => $path]));
+        endforeach;
+        $product->tags()->sync($request->tags, false);
+
         return redirect()->route('admin.products.index');
     }
 
@@ -93,7 +120,7 @@ class AdminProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**

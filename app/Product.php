@@ -24,4 +24,12 @@ class Product extends Model
     {
     	return $this->belongsTo('App\Brand');
     }
+    public function images()
+    {
+        return $this->hasMany('App\Productphoto');
+    }
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
 }
